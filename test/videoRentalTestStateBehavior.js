@@ -19,7 +19,8 @@ suite('Client in VideoRental', function () {
         clientStub = {
         	films:0,
         	discount:0,
-        	debtor:false
+        	debtor:false,
+        	friend:0
         }
         videoRental = new VideoRental(clientStub);
     });
@@ -56,6 +57,12 @@ suite('Client in VideoRental', function () {
     	clientStub.debtor = true;
         videoRental.getFilm(3);
         assert.throws(clientStub.films,0);
+    });
+
+    test('Discount 10% if cleint bring a friend', function () {
+    	clientStub.friend = 1;
+    	videoRental.calcDiscount();
+        assert.equal(clientStub.discount,10);
     });
 
     teardown(function() {

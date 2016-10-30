@@ -23,6 +23,9 @@ export class VideoRental {
 	        if (this._client.discount > 20){
 	        	this._client.discount = 20;
 	        }
+	        if (this._client.friend > 0){
+	        	this._client.discount += 10;
+	        }
 	        return this._client.discount;
 	    };
 
