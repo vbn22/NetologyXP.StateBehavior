@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --ui tdd test/*Tests.js"
+    "test": "mocha --compilers js:babel-core/register --ui tdd test/*StateBehavior.js"
   },
   "dependencies": {
     "chai": "latest",
