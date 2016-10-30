@@ -18,6 +18,16 @@ export class VideoRental {
 	        return this._client.films;
 	    };
 
+	    get clientDateOfBirth(){
+	    	let today = new Date();
+	    	if (today.setHours(0,0,0,0) == this._client.dateOfBirth.setHours(0,0,0,0)){
+	    		return true;
+	    	} else {
+	    		return false;
+	    	}
+
+	    }
+
 	    calcDiscount(){
 	        this._client.discount = this._client.films * 5;
 	        if (this._client.discount > 20){
@@ -25,6 +35,9 @@ export class VideoRental {
 	        }
 	        if (this._client.friend > 0){
 	        	this._client.discount += 10;
+	        }
+	        if (this.clientDateOfBirth){
+	        	this._client.discount += 20;
 	        }
 	        return this._client.discount;
 	    };

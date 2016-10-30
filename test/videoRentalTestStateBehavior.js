@@ -20,7 +20,8 @@ suite('Client in VideoRental', function () {
         	films:0,
         	discount:0,
         	debtor:false,
-        	friend:0
+        	friend:0,
+        	dateOfBirth:new Date('10 06 1990')
         }
         videoRental = new VideoRental(clientStub);
     });
@@ -59,10 +60,10 @@ suite('Client in VideoRental', function () {
         assert.throws(clientStub.films,0);
     });
 
-    test('Discount 10% if cleint bring a friend', function () {
-    	clientStub.friend = 1;
+    test('Discount 20% if today is Date of Birth', function () {
+    	clientStub.dateOfBirth = new Date();
     	videoRental.calcDiscount();
-        assert.equal(clientStub.discount,10);
+        assert.equal(clientStub.discount,20);
     });
 
     teardown(function() {
