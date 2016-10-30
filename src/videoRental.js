@@ -7,6 +7,10 @@ export class VideoRental {
 	    };
 
 	    getFilm(number){
+	    	if (this._client.debtor){
+	    		/*throw new Error('Debtor can not get film');*/
+	    		return this._client.films;
+	    	}
 	        this._client.films += number;
 	        if (this._client.films > 5){
 	        	this._client.films = 5;
