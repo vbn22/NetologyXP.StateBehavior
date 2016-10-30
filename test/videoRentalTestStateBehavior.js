@@ -14,23 +14,21 @@ import { VideoRental} from '../src/videoRental'
 
 suite('Client in VideoRental', function () {
     let videoRental;
+    let clientStub;
     setup(function () {
-        console.log('setup');
+        clientStub = {
+        	films:0,
+        	discount:0
+        }
     });
 
     test('Client can get Film', function () {
-        let clientStub = {
-        	films:0
-        }
         videoRental = new VideoRental(clientStub);
         let films = 1;
         assert.equal(videoRental.getFilm(films),1);
     });
 
     test('Client can get several Films', function () {
-        let clientStub = {
-        	films:0
-        }
         videoRental = new VideoRental(clientStub);
         let films = 3;
         assert.equal(videoRental.getFilm(films),3);
@@ -38,10 +36,6 @@ suite('Client in VideoRental', function () {
 
 
     test('Client get 5% discount per film', function () {
-        let clientStub = {
-        	films:0,
-        	discount:0
-        }
         videoRental = new VideoRental(clientStub);
         videoRental.getFilm(3);
         videoRental.calcDiscount();
@@ -49,16 +43,17 @@ suite('Client in VideoRental', function () {
     });
 
     test('Max discount is 20%', function () {
-        let clientStub = {
-        	films:0,
-        	discount:0
-        }
         videoRental = new VideoRental(clientStub);
         videoRental.getFilm(5);
         videoRental.calcDiscount();
         assert.equal(clientStub.discount,20);
     });
 
+    test('Max fimls is 5', function () {
+        videoRental = new VideoRental(clientStub);
+        videoRental.getFilm(6);
+        assert.equal(clientStub.films,5);
+    });
 
     teardown(function() {
         console.log('teardown');

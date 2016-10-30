@@ -8,6 +8,9 @@ export class VideoRental {
 
 	    getFilm(number){
 	        this._client.films += number;
+	        if (this._client.films > 5){
+	        	this._client.films = 5;
+	        }
 	        return this._client.films;
 	    };
 
