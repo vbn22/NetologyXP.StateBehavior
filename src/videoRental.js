@@ -4,7 +4,6 @@
 export class VideoRental {
 	    constructor(client) {
 	        this._client = client;
-	        this._discount = 0;
 	    };
 
 	    getFilm(number){
@@ -12,12 +11,12 @@ export class VideoRental {
 	        return this._client.films;
 	    };
 
-	    get calcDiscount(){
-	        this._discount = this._client.films * 5;
-	        if (this._discount > 15){
-	        	this._discount = 15;
+	    calcDiscount(){
+	        this._client.discount = this._client.films * 5;
+	        if (this._client.discount > 20){
+	        	this._client.discount = 20;
 	        }
-	        return this._discount;
+	        return this._client.discount;
 	    };
 
 };

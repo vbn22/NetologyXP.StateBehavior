@@ -5,11 +5,11 @@ import { VideoRental} from '../src/videoRental'
 /*
 ## Видеопрокат
 * Клиент может взять фильм в прокат
-* Клиент может взять несколько фильмов и получить скидку 5% за каждый, но не более 15%
+* Клиент может взять несколько фильмов и получить скидку 5% за каждый, но не более 20%
 * Не выдавать больше 5 фильмов за раз одному клиенту
 * Если клиент не вернул прошлый фильм, не выдавать ему новых
 * Приведи друга, получи дополнительную скидку 10%
-* Скидка в день рождения 30%
+* Скидка в день рождения 20%
 */
 
 suite('Client in VideoRental', function () {
@@ -39,14 +39,25 @@ suite('Client in VideoRental', function () {
 
     test('Client get 5% discount per film', function () {
         let clientStub = {
-        	films:0
+        	films:0,
+        	discount:0
         }
         videoRental = new VideoRental(clientStub);
-        let films = 3;
-        videoRental.getFilm(films);
-        assert.equal(videoRental.calcDiscount,3*5);
+        videoRental.getFilm(3);
+        videoRental.calcDiscount();
+        assert.equal(clientStub.discount,3*5);
     });
 
+    test('Max discount is 20%', function () {
+        let clientStub = {
+        	films:0,
+        	discount:0
+        }
+        videoRental = new VideoRental(clientStub);
+        videoRental.getFilm(5);
+        videoRental.calcDiscount();
+        assert.equal(clientStub.discount,20);
+    });
 
 
     teardown(function() {
