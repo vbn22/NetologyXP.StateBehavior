@@ -26,7 +26,13 @@ suite('Behavior tests. Tests', function () {
     })
 
     test('I can add account to email service',function () {
-            emailMock.expects('addAccount').once().returns(true);
+            emailMock.expects('addAccount').once().returns(1);
+            email.addAccount(account);
+        })
+
+    test('I can add several accounts to email service',function () {
+            emailMock.expects('addAccount').twice().returns(2);
+            email.addAccount(account);
             email.addAccount(account);
         })
 

@@ -7,6 +7,6 @@ export class Email {
 	    };
 	addAccount(account){
 		this._accounts += account;
-		return true;
+		return this._accounts.length();
 	}
 };
