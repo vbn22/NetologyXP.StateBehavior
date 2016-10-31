@@ -19,10 +19,12 @@ suite('Behavior tests. Tests', function () {
     let email;
     let account;
     let emailMock;
+    let message;
     setup(function(){
         account = new EmailAccount('Michael@mail.ru')
         email = new Email();
         emailMock = sinon.mock(email);
+        message = {from:'Michael@mail.ru',to:'support@mail.ru',text:'hi man'};
     })
 
     test('I can add account to email service',function () {
@@ -39,7 +41,7 @@ suite('Behavior tests. Tests', function () {
     test('I can send message',function () {
             emailMock.expects('connect').once();
             email.addAccount(account);
-            email.sendMessage({from:'Michael@mail.ru',to:'support@mail.ru',text:'hi man'})
+            email.sendMessage(message)
         })
 
     test('I can get message',function () {
@@ -47,6 +49,15 @@ suite('Behavior tests. Tests', function () {
             email.addAccount(account);
             email.getMessage();
         })
+
+    suite('When is not connection to internet', function () {
+        test('Message add to queue',function () {
+            email.network_status = false;
+            emailMock.expects('messageToQueue').withArgs(message);
+            email.addAccount(account);
+            email.sendMessage(message);
+        });
+    });
 
     teardown(function() {
         emailMock.restore();

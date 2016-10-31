@@ -4,6 +4,8 @@
 export class Email {
 	constructor() {
 		this._accounts = [];
+		this._queue = [];
+		this.network_status = true;
 	};
 	addAccount(account){
 		this._accounts.push(account);
@@ -13,8 +15,17 @@ export class Email {
 		/*connetion*/
 		return true
 	}
-	sendMessage(from,to,text){
-		this.connect();
+	messageToQueue(message){
+		this._queue.push(message);
+		return true;
+	}
+	sendMessage(message){
+		if (this.network_status){
+			this.connect();
+		} else {
+			this.messageToQueue(message)
+		}
+
 		return true;
 	}
 	getMessage(){
