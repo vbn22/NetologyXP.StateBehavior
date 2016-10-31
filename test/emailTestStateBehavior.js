@@ -1,6 +1,7 @@
 import assert from 'assert'
-import { Client} from '../src/clientVideoRental'
-import { VideoRental} from '../src/videoRental'
+import sinon from 'sinon'
+import { EmailAccount} from '../src/account'
+import { Email} from '../src/email'
 
 /*
 Почтовый клиент
@@ -14,10 +15,23 @@ import { VideoRental} from '../src/videoRental'
 
 */
 
-suite('Email tests', function () {
+suite('Behavior tests. Tests', function () {
+    let email;
+    let account;
+    let emailMock;
+    setup(function(){
+        account = new EmailAccount('Michael@mail.ru')
+        email = new Email();
+        emailMock = sinon.mock(email);
+    })
 
+    test('I can add account to email service',function () {
+            emailMock.expects('addAccount').once().returns(true);
+            email.addAccount(account);
+        })
 
     teardown(function() {
-        console.log('teardown');
+        emailMock.restore();
+        emailMock.verify();
     })
 });

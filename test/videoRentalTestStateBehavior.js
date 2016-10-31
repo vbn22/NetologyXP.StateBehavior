@@ -12,7 +12,7 @@ import { VideoRental} from '../src/videoRental'
 * Скидка в день рождения 20%
 */
 
-suite('Client in VideoRental', function () {
+suite('State tests. Client in VideoRental', function () {
     let videoRental;
     let clientStub;
     setup(function () {
