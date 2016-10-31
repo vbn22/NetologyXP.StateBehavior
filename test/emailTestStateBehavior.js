@@ -36,6 +36,12 @@ suite('Behavior tests. Tests', function () {
             email.addAccount(account);
         })
 
+    test('I can send message',function () {
+            emailMock.expects('connect').once();
+            email.addAccount(account);
+            email.sendMessage({from:'Michael@mail.ru',to:'support@mail.ru',text:'hi man'})
+        })
+
     teardown(function() {
         emailMock.restore();
         emailMock.verify();
