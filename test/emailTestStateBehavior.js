@@ -12,8 +12,8 @@ import { Email} from '../src/email'
 Если у меня отключен интернет, письмо ставится в очередь на отправку
 Когда появляется интернет, письмо само отправляется из очереди
 Когда отправляю письмо, могу выбрать, с какого аккаунта отправлять
-
 */
+
 
 suite('Behavior tests. Tests', function () {
     let email;
@@ -56,6 +56,17 @@ suite('Behavior tests. Tests', function () {
             emailMock.expects('messageToQueue').withArgs(message);
             email.addAccount(account);
             email.sendMessage(message);
+        });
+    });
+
+    suite('When connection is ok', function () {
+        test('Send messages from queue',function () {
+            email.network_status = false;
+            emailMock.expects('connect').once();
+            email.addAccount(account);
+            email.sendMessage(message);
+            email.network_status = true;
+            email.checkInternet();
         });
     });
 

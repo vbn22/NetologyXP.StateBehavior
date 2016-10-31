@@ -15,6 +15,13 @@ export class Email {
 		/*connetion*/
 		return true
 	}
+
+	checkInternet(){
+		if (this.network_status && this._queue.length > 0){
+			this.connect();
+		}
+	}
+
 	messageToQueue(message){
 		this._queue.push(message);
 		return true;
