@@ -26,12 +26,12 @@ suite('Behavior tests. Tests', function () {
     })
 
     test('I can add account to email service',function () {
-            emailMock.expects('addAccount').once().returns(1);
+            emailMock.expects('addAccount').once();
             email.addAccount(account);
         })
 
     test('I can add several accounts to email service',function () {
-            emailMock.expects('addAccount').twice().returns(2);
+            emailMock.expects('addAccount').twice();
             email.addAccount(account);
             email.addAccount(account);
         })
