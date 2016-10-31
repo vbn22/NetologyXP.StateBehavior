@@ -17,4 +17,8 @@ export class Email {
 		this.connect();
 		return true;
 	}
+	getMessage(){
+		this.connect();
+		return true;
+	}
 };
