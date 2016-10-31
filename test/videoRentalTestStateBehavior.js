@@ -57,7 +57,7 @@ suite('Client in VideoRental', function () {
     test('Debtor does not get film', function () {
     	clientStub.debtor = true;
         videoRental.getFilm(3);
-        assert.throws(clientStub.films,0);
+        assert.equal(clientStub.films,0);
     });
 
     test('Discount 20% if today is Date of Birth', function () {
