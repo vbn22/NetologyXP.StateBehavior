@@ -27,6 +27,18 @@ export class Email {
 		return true;
 	}
 	sendMessage(message){
+		let account = null;
+		for (let acc of this._accounts) {
+		   if (acc.name == message.from){
+			   account = acc;
+			   break;
+		   }
+		}
+		
+		if (!account){
+			return false;
+		}
+
 		if (this.network_status){
 			this.connect();
 		} else {

@@ -70,6 +70,16 @@ suite('Behavior tests. Tests', function () {
         });
     });
 
+    test('Change account from',function () {
+        let account_second = new EmailAccount('second@mail.ru')
+        emailMock.expects('connect').once();
+        email.addAccount(account);
+        email.addAccount(account_second);
+        let secondMessage = {from:'second@mail.ru',to:'support@mail.ru',text:'hi man'};
+        email.sendMessage(secondMessage)
+    });
+
+
     teardown(function() {
         emailMock.restore();
         emailMock.verify();
