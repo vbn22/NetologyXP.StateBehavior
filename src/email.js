@@ -11,6 +11,12 @@ export class Email {
 		this._accounts.push(account);
 		return this._accounts.length;
 	}
+
+	addAccounts(accounts){
+		this._accounts.concat(accounts);
+		return this._accounts.length;
+	}
+
 	connect(){
 		/*connetion*/
 		return true
@@ -22,18 +28,20 @@ export class Email {
 		}
 	}
 
+
 	messageToQueue(message){
 		this._queue.push(message);
 		return true;
 	}
 	sendMessage(message){
 		let account = null;
-		for (let acc of this._accounts) {
-		   if (acc.name == message.from){
-			   account = acc;
+		for (let i = 0; i < this._accounts.length; i++){
+			let item = this._accounts[i];
+			if (item._name == message.from){
+			   account = item;
 			   break;
-		   }
-		}
+		    }
+		};
 		
 		if (!account){
 			return false;

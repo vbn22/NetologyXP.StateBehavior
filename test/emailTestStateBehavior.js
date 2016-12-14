@@ -14,6 +14,11 @@ import { Email} from '../src/email'
 Когда отправляю письмо, могу выбрать, с какого аккаунта отправлять
 */
 
+/*
+- какой класс тестируем?
+- какие зависимости заменяем на тест-дублеры?
+- В какой ситуации тест может упасть?
+*/
 
 suite('Behavior tests. Tests', function () {
     let email;
@@ -28,26 +33,31 @@ suite('Behavior tests. Tests', function () {
     })
 
     test('I can add account to email service',function () {
-            emailMock.expects('addAccount').once();
+            emailMock.expects('addAccount').returns(1);
             email.addAccount(account);
+
+            // тестируем Email класс
+            // подменяем addAccount
+            // тест может упасть если аккаунт не добавится
         })
 
     test('I can add several accounts to email service',function () {
-            emailMock.expects('addAccount').twice();
-            email.addAccount(account);
-            email.addAccount(account);
+            emailMock.expects('addAccounts').returns(2);
+            email.addAccounts([account,account]);
+ 
+            // тестируем Email класс
+            // подменяем addAccounts
+            // тест может упасть если несколько аккаунтов не добавтся
         })
 
     test('I can send message',function () {
             emailMock.expects('connect').once();
             email.addAccount(account);
-            email.sendMessage(message)
-        })
+            email.sendMessage(message);
 
-    test('I can get message',function () {
-            emailMock.expects('connect').once();
-            email.addAccount(account);
-            email.getMessage();
+            // тестируем Email класс
+            // подменяем connect
+            // тест модет упасть если при отправки сообщения не будет вызван connect
         })
 
     suite('When is not connection to internet', function () {
@@ -56,27 +66,38 @@ suite('Behavior tests. Tests', function () {
             emailMock.expects('messageToQueue').withArgs(message);
             email.addAccount(account);
             email.sendMessage(message);
+
+            // тестируем Email класс
+            // подменяем messageToQueue
+            // тест упадет если при отправке сообщения не будет вызван 
+            // messageToQueue с аргументами ..
         });
     });
 
-    suite('When connection is ok', function () {
-        test('Send messages from queue',function () {
+    suite('When connection is not ok', function () {
+        test('Don not send messages from queue',function () {
             email.network_status = false;
-            emailMock.expects('connect').once();
+            emailMock.expects('connect').never();
             email.addAccount(account);
             email.sendMessage(message);
-            email.network_status = true;
-            email.checkInternet();
+
+            // тестируем Email класс
+            // подменяем connect
+            // тест упадет если произойдет вызов connect при отсутствии соединения
         });
     });
 
     test('Change account from',function () {
         let account_second = new EmailAccount('second@mail.ru')
-        emailMock.expects('connect').once();
+        emailMock.expects('sendMessage').returns(true);
         email.addAccount(account);
         email.addAccount(account_second);
         let secondMessage = {from:'second@mail.ru',to:'support@mail.ru',text:'hi man'};
         email.sendMessage(secondMessage)
+
+        // тестируем Email класс
+        // подменяем sendMessage
+        // тест упадет если sendMessage вернет false (неудачу ппри попытке отправки письма)
     });
 
 
